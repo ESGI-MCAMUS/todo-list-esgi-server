@@ -1,4 +1,6 @@
 import { route } from "./routes/route";
+import { user } from "./routes/user";
+import { list } from "./routes/list";
 import { webServices } from "./services/web";
 
 const env = require("dotenv").config();
@@ -21,9 +23,11 @@ app.use((req: any, res: any, next: any) => {
 });
 
 app.get("/", function (req: any, res: any) {
-  res.status(200).json({ "server-name": { version: process.env.VERSION } });
+  res.status(200).json({ "todo-list": { version: process.env.VERSION } });
 });
 
 route(app);
+user(app);
+list(app);
 
 webServices({ app: app, usingHttps: false, httpsDomain: "" });
