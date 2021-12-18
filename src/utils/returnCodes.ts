@@ -56,9 +56,35 @@ export const returnCode = {
       message: "The user already exist !",
     },
   },
+  todo_created: {
+    code: 201,
+    payload: {
+      title: "todo_created",
+      message: "The todo has been created successfully!",
+    },
+  },
 };
 
 export interface Res {
   status: (code: number) => any;
   json: (json: any) => any;
 }
+
+export const todoFailPayload = (
+  payload: "too_early" | "max_reached" | "over_1000_chars" | "already_exist"
+): string => {
+  switch (payload) {
+    case "too_early":
+      return "You must wait 30 minutes between two todos !";
+      break;
+    case "max_reached":
+      return "You can't add more than 10 todos !";
+      break;
+    case "over_1000_chars":
+      return "The todo content can't be longer than 1000 characters !";
+      break;
+    case "already_exist":
+      return "The todo using this name already exist !";
+      break;
+  }
+};

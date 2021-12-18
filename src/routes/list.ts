@@ -1,15 +1,14 @@
 import { db } from "../db";
+import { ToDoList } from "../models/ToDoList";
 import { ItemAdd } from "../utils/interfaces";
-import { Res, returnCode } from "../utils/returnCodes";
+import { Res, returnCode, todoFailPayload } from "../utils/returnCodes";
 const env = require("dotenv").config();
 
-export const list = (app: any) => {
+const list = (app: any) => {
   app.get("/list/:id", async function (req: any, res: Res) {
-    const list = await db.queryParams(
-      "SELECT item.id, item.name, item.content, item.created_at from todoList tdl left join item on tdl.fk_item = item.id where fk_user = ?",
-      [req.params.id]
-    );
-    res.status(200).json(list);
+    const id = req.params.id;
+    const todoList = new ToDoList(id);
+    res.status(200).json(await todoList.getTodoList());
   });
 
   app.post("/list/:id/ajout/", async function (req: any, res: Res) {
@@ -19,7 +18,18 @@ export const list = (app: any) => {
         .status(returnCode.missingParameters.code)
         .json(returnCode.missingParameters.payload);
     } else {
-      res.status(200).json({ status: "ok" });
+      const todo = new ToDoList(req.params.id);
+      const addedTodo = await todo.addTodo(body.nom, body.content);
+      if (addedTodo === true) {
+        res
+          .status(returnCode.todo_created.code)
+          .json(returnCode.todo_created.payload);
+      } else {
+        res
+          .status(400)
+          .json({ title: addedTodo, message: todoFailPayload(addedTodo) });
+      }
     }
   });
 };
+export default list;

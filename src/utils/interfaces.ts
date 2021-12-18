@@ -35,7 +35,14 @@ export interface UserRegister {
   birthdate: string;
 }
 
-/* ITEM */
+/* TODOS */
+
+export interface Todo {
+  id: number;
+  name: string;
+  content: string;
+  created_at: Date;
+}
 
 export interface ItemAdd {
   nom: string;

@@ -44,7 +44,8 @@ export const isPasswordValid = (password: string): boolean => {
  * @returns {boolean}
  */
 export const is30minBetween = (date1: Date, date2: Date): boolean => {
-  const diff = Math.abs(date2.getTime() - date1.getTime());
+  const diff = Math.abs(date1.getTime() - date2.getTime());
   const diffMinutes = Math.ceil(diff / (1000 * 60));
+
   return diffMinutes > 30;
 };
