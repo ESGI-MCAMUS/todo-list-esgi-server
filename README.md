@@ -3,10 +3,22 @@
 
 ## Getting started
 
-
 Install all dependencies using `npm`.
 ```bash
 npm install # Or `npm i`
+```
+
+## Database 
+
+You must start a database locally before starting the project. You can import the database from the `todo_list.sql` file in the root directory.
+
+Then you have to set the `.env` file with the following variables:
+```bash
+MYSQL_HOST=your_host
+MYSQL_USER=your_user
+MYSQL_PASSWORD=your_password
+MYSQL_PORT=3306 # 3306 is the default port, change it if necessary
+MYSQL_DB=todo_list
 ```
 
 ## Available commands
