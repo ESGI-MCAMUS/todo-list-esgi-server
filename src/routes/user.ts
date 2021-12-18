@@ -4,7 +4,7 @@ import { UserLogin, UserRegister } from "../utils/interfaces";
 import { Res, returnCode } from "../utils/returnCodes";
 const env = require("dotenv").config();
 
-export const user = (app: any) => {
+const user = (app: any) => {
   app.post("/user/login", async function (req: any, res: Res) {
     const body: UserLogin = req.body;
     if (!body.email || !body.password) {
@@ -64,3 +64,5 @@ export const user = (app: any) => {
     }
   });
 };
+
+export default user;

@@ -1,7 +1,5 @@
-import { route } from "./routes/route";
-import { user } from "./routes/user";
-import { list } from "./routes/list";
 import { webServices } from "./services/web";
+import { getRoutes } from "./services/routes";
 
 const env = require("dotenv").config();
 
@@ -18,7 +16,6 @@ app.use((req: any, res: any, next: any) => {
   res.append("version", process.env.VERSION);
   res.append("Access-Control-Allow-Origin", "*");
   res.append("Access-Control-Allow-Headers", "*");
-
   next();
 });
 
@@ -26,8 +23,11 @@ app.get("/", function (req: any, res: any) {
   res.status(200).json({ "todo-list": { version: process.env.VERSION } });
 });
 
-route(app);
-user(app);
-list(app);
+const routes = getRoutes();
+routes.forEach((route: string) => {
+  import("./routes/" + route).then((r: any) => {
+    r.default(app);
+  });
+});
 
 webServices({ app: app, usingHttps: false, httpsDomain: "" });
