@@ -6,7 +6,7 @@ const env = require("dotenv").config();
 export const list = (app: any) => {
   app.get("/list/:id", async function (req: any, res: Res) {
     const list = await db.queryParams(
-      "SELECT item.nom, item.content, tdl.date_ajout from todoList tdl left join item on tdl.fk_item = item.id where fk_user = ?",
+      "SELECT item.id, item.name, item.content, item.created_at from todoList tdl left join item on tdl.fk_item = item.id where fk_user = ?",
       [req.params.id]
     );
     res.status(200).json(list);
