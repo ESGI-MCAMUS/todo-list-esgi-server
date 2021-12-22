@@ -15,7 +15,7 @@ export class EmailSendService {
   sendReminderEmail = (): boolean => {
     if (isEmailValid(this.email)) {
       console.log(
-        `Hey ${this.email}! You already have a 8 todos! Only 2 remaining!`
+        `Hey ${this.email}! You already have 8 todos! Only 2 remaining!`
       );
       return true;
     } else {
