@@ -13,10 +13,14 @@ export class EmailSendService {
    * @returns boolean
    */
   sendReminderEmail = (): boolean => {
-    console.log(
-      `Hey ${this.email}! You already have a 8 todos! Only 2 remaining!`
-    );
-
-    return isEmailValid(this.email);
+    if (isEmailValid(this.email)) {
+      console.log(
+        `Hey ${this.email}! You already have a 8 todos! Only 2 remaining!`
+      );
+      return true;
+    } else {
+      console.log("The email could not be sent!");
+      return false;
+    }
   };
 }
