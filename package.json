@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm run build && node build/index.js -r dotenv/config",
     "start:dev": "nodemon -r dotenv/config",
-    "build": "rm -rf build/ && rimraf ./build && tsc && mv ./build/index.js ./build/le-saint-patrick-api.js"
+    "build": "rm -rf build/ && rimraf ./build && tsc && mv ./build/index.js ./build/le-saint-patrick-api.js",
+    "test": "npx jest"
   },
   "keywords": [
     "server",
@@ -24,11 +25,13 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.3",
     "@types/node": "^15.12.4",
     "dotenv": "^10.0.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
+    "ts-jest": "^27.1.2",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.4"
   }
