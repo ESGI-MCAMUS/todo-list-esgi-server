@@ -40,7 +40,7 @@ npm start
 
 ## Testing the app
 
-In order to perform unit, we're using the [Jest](https://jestjs.io/) testing framework.
+In order to perform unit testing, we're using the [Jest](https://jestjs.io/) testing framework.
 
 Every test can be found in the `src/tests` directory.
 
