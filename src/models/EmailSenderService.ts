@@ -12,7 +12,7 @@ export class EmailSendService {
    *
    * @returns boolean
    */
-  sendReminderEmail = (): boolean => {
+  sendReminderEmail = (): boolean | "user_not_found" => {
     if (isEmailValid(this.email)) {
       console.log(
         `Hey ${this.email}! You already have 8 todos! Only 2 remaining!`
