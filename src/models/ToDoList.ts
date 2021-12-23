@@ -1,6 +1,7 @@
 import { db } from "../db";
 import { is30minBetween } from "../utils/helpers";
 import { Todo } from "../utils/interfaces";
+import { EmailSendService } from "./EmailSenderService";
 
 export class ToDoList {
   public todos: Todo[];
@@ -50,12 +51,18 @@ export class ToDoList {
       return "over_1000_chars";
     }
 
-    // Getting the todo from the database
-    const todos: Todo[] = await db.queryParams(
-      "SELECT item.id, item.name, item.content, item.created_at from todoList tdl left join item on tdl.fk_item = item.id where fk_user = ?",
-      [this.userId]
-    );
-    this.todos = todos;
+    // Getting the todo from the database if the `todos` field isn't already filled
+    if (this.todos.length === 0) {
+      try {
+        const todos: Todo[] = await db.queryParams(
+          "SELECT item.id, item.name, item.content, item.created_at from todoList tdl left join item on tdl.fk_item = item.id where fk_user = ?",
+          [this.userId]
+        );
+        this.todos = todos;
+      } catch (error) {
+        console.log("DATABASE ERROR: ", error);
+      }
+    }
 
     // Checking if the user has todos, if not, insert the todo
     if (this.todos.length === 0) {
@@ -84,23 +91,34 @@ export class ToDoList {
       }
 
       // Checking if the todo already exist
-      const todo: Todo[] = await db.queryParams(
-        "SELECT item.id, item.name, item.content, item.created_at from todoList tdl left join item on tdl.fk_item = item.id where fk_user = ? AND item.name = ?",
-        [this.userId, name]
-      );
-      if (todo.length > 0) {
+      const todoAlreadyExist = this.todos.find((todo) => todo.name === name);
+      if (todoAlreadyExist) {
         return "already_exist";
       }
 
-      // Inserting the todo
-      const insertedTodo = await db.queryParams(
-        "INSERT INTO item (name, content) VALUES (?, ?)",
-        [name, content]
-      );
-      const insertedBindingTable = await db.queryParams(
-        "INSERT INTO todoList (fk_user, fk_item) VALUES (?, ?)",
-        [this.userId, insertedTodo.insertId]
-      );
+      // Checking if the user has 8 todos. If so, send an email to the user
+      if (this.todos.length === 8) {
+        const user = await db.queryParams(
+          "SELECT email from user where id = ?",
+          [this.userId]
+        );
+        const emailSendService = new EmailSendService(user[0].email);
+        emailSendService.sendReminderEmail();
+      }
+
+      try {
+        // Inserting the todo
+        const insertedTodo = await db.queryParams(
+          "INSERT INTO item (name, content) VALUES (?, ?)",
+          [name, content]
+        );
+        const insertedBindingTable = await db.queryParams(
+          "INSERT INTO todoList (fk_user, fk_item) VALUES (?, ?)",
+          [this.userId, insertedTodo.insertId]
+        );
+      } catch (error) {
+        console.log("DATABASE ERROR => ", error);
+      }
 
       return true;
     }
