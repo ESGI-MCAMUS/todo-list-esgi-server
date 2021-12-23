@@ -1,5 +1,5 @@
 # TODO List - Unit testing project
-
+This project has been created and maintained by [@MisterGoodDeal](https://github.com/MisterGoodDeal), [@ThomasGeoffron](https://github.com/ThomasGeoffron) and [@Haborym](https://github.com/Haborym) for the course `Test unitaire @ ESGI`.
 
 ## Getting started
 
@@ -37,3 +37,23 @@ Build and start the project
 ```bash
 npm start
 ```
+
+## Testing the app
+
+In order to perform unit, we're using the [Jest](https://jestjs.io/) testing framework.
+
+Every test can be found in the `src/tests` directory.
+
+We are testing 4 main components:
+- The user model
+- The todo model
+- The email service (It's not a real service, it's just a mock)
+- The helpers functions
+
+Here's the command to run the tests:
+```bash
+npm run test # Run the tests with all logs and warning
+
+npm run slient-test # Run the tests without logs and warning
+```
+
