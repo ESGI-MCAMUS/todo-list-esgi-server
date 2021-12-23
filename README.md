@@ -50,6 +50,8 @@ We are testing 4 main components:
 - The email service (It's not a real service, it's just a mock)
 - The helpers functions
 
+**⚠️ You don't need to start the database in order to run tests. If you don't start it, you might have error logs, but it's fine, don't worry about it. 🙃**
+
 Here's the command to run the tests:
 ```bash
 npm run test # Run the tests with all logs and warning
@@ -57,3 +59,43 @@ npm run test # Run the tests with all logs and warning
 npm run slient-test # Run the tests without logs and warning
 ```
 
+## Routes
+### User
+- Login the user:
+
+  `POST: /user/login`
+  ```JSON
+  {
+      "email": string,
+      "password": string
+  }
+  ```
+- Register the user:
+
+    `POST: /user/register`
+    ```JSON
+    {
+        "firstname": string,
+        "lastname": string,
+        "email": string,
+        "password": string,
+        "birthdate": Date
+    }
+    ```
+
+### List
+- Get all todos from a user:
+
+  ```bash
+  GET: /list/:id # (id is the user id)
+  ```
+- Create a todo:
+
+  ```bash
+  POST /list/:id/ajout/ # (id is the user id)
+  ```
+  ```JSON
+  {
+      "nom": string,
+      "content": string,
+  }
