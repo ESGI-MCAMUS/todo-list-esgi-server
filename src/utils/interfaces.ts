@@ -13,6 +13,14 @@ export interface SQLiteSelectParams {
   query: string;
 }
 
+export interface JWTProps {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  birthdate: Date;
+}
+
 /* USER */
 
 export interface User {
@@ -33,6 +41,15 @@ export interface UserRegister {
   email: string;
   password: string;
   birthdate: string;
+}
+
+export interface InsertResponse {
+  fieldCount: number;
+  affectedRows: number;
+  insertId: number;
+  info: string;
+  serverStatus: number;
+  warningStatus: number;
 }
 
 /* TODOS */

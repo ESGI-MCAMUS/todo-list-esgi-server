@@ -1,4 +1,18 @@
 export const returnCode = {
+  missingToken: {
+    code: 403,
+    payload: {
+      title: "missing_token",
+      message: "Missing token, couldn't authenticate",
+    },
+  },
+  invalidToken: {
+    code: 401,
+    payload: {
+      title: "invalid_token",
+      message: "Invalid token, couldn't authenticate",
+    },
+  },
   missingParameters: {
     code: 400,
     payload: {

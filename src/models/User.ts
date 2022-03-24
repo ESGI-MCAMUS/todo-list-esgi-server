@@ -1,6 +1,7 @@
 import { UserInfo } from "os";
 import { db } from "../db";
 import { isEmailValid, isOldEnough, isPasswordValid } from "../utils/helpers";
+import { InsertResponse } from "../utils/interfaces";
 
 export class User {
   //private id: number;
@@ -69,7 +70,7 @@ export class User {
   /**
    * @returns {Promise<boolean>}
    */
-  register = async (): Promise<boolean> => {
+  register = async (): Promise<boolean | InsertResponse> => {
     const alreadyExist: User[] | [] = await db.queryParams(
       "SELECT * FROM users WHERE email = ?",
       [this.email]
@@ -78,7 +79,7 @@ export class User {
     if (alreadyExist.length === 0) {
       const result: boolean = await db
         .queryParams(
-          "INSERT INTO users (firstname, lastname, email, password, birthdate) VALUES (?, ?, ?, ?, ?)",
+          "INSERT INTO users (firstname, lastname, email, password, birthdate, token) VALUES (?, ?, ?, ?, ?, '')",
           [
             this.firstname,
             this.lastname,
@@ -89,11 +90,7 @@ export class User {
         )
         .catch(() => {
           return false;
-        })
-        .then(() => {
-          return true;
         });
-
       return result;
     } else {
       return false;
