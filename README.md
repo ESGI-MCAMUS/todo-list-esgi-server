@@ -1,6 +1,8 @@
 # TODO List - Unit testing project
 This project has been created and maintained by [@MisterGoodDeal](https://github.com/MisterGoodDeal), [@ThomasGeoffron](https://github.com/ThomasGeoffron) and [@Haborym](https://github.com/Haborym) for the course `Test unitaire @ ESGI`.
 
+*This project is the backend of the [React App `todo-list-esgi-react`](https://github.com/MisterGoodDeal/todo-list-esgi-react), please also refer to this project.*
+
 ## Getting started
 
 Install all dependencies using `npm`.
@@ -60,6 +62,9 @@ npm run slient-test # Run the tests without logs and warning
 ```
 
 ## Routes
+
+**✅ This project is partially protected with an authentication token (JWT) for critical routes** 
+
 ### User
 - Login the user:
 
@@ -92,10 +97,20 @@ npm run slient-test # Run the tests without logs and warning
 - Create a todo:
 
   ```bash
-  POST /list/:id/ajout/ # (id is the user id)
+  POST /list/:id # (id is the user id)
   ```
   ```JSON
   {
       "nom": string,
       "content": string,
+  }
+  ```
+  - Delete a todo:
+
+  ```bash
+  DELETE /list/:id # (id is the user id)
+  ```
+  ```JSON
+  {
+      "id": number, # Id of the todo to delete
   }
