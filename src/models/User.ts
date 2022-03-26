@@ -2,6 +2,7 @@ import { UserInfo } from "os";
 import { db } from "../db";
 import { isEmailValid, isOldEnough, isPasswordValid } from "../utils/helpers";
 import { InsertResponse } from "../utils/interfaces";
+const bcrypt = require("bcrypt");
 
 export class User {
   //private id: number;
@@ -60,11 +61,9 @@ export class User {
       "SELECT * FROM users WHERE email = ?",
       [this.email]
     );
-    return users.length === 0
-      ? false
-      : users[0].password === this.password
-      ? users[0]
-      : false;
+    const hashedPassword = users[0].password;
+    const isPasswordValid = await bcrypt.compare(this.password, hashedPassword);
+    return users.length === 0 ? false : isPasswordValid ? users[0] : false;
   };
 
   /**
@@ -77,6 +76,7 @@ export class User {
     );
 
     if (alreadyExist.length === 0) {
+      const hashedPassword = await bcrypt.hash(this.password, 10);
       const result: boolean = await db
         .queryParams(
           "INSERT INTO users (firstname, lastname, email, password, birthdate, token) VALUES (?, ?, ?, ?, ?, '')",
@@ -84,7 +84,7 @@ export class User {
             this.firstname,
             this.lastname,
             this.email,
-            this.password,
+            hashedPassword,
             this.birthdate,
           ]
         )
