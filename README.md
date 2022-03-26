@@ -63,7 +63,7 @@ npm run slient-test # Run the tests without logs and warning
 
 ## Routes
 
-**✅ This project is partially protected with an authentication token (JWT) for critical routes** 
+**✅ This project is partially protected with an authentication token (JWT) for critical routes. Those routes are marked with a 🔐** 
 
 ### User
 - Login the user:
@@ -92,12 +92,12 @@ npm run slient-test # Run the tests without logs and warning
 - Get all todos from a user:
 
   ```bash
-  GET: /list/:id # (id is the user id)
+  🔐 GET: /list/:id # (id is the user id)
   ```
 - Create a todo:
 
   ```bash
-  POST /list/:id # (id is the user id)
+  🔐 POST /list/:id # (id is the user id)
   ```
   ```JSON
   {
@@ -108,7 +108,7 @@ npm run slient-test # Run the tests without logs and warning
   - Delete a todo:
 
   ```bash
-  DELETE /list/:id # (id is the user id)
+  🔐 DELETE /list/:id # (id is the user id)
   ```
   ```JSON
   {
