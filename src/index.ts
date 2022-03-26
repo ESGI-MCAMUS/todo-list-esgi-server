@@ -16,6 +16,7 @@ app.use((req: any, res: any, next: any) => {
   res.append("version", process.env.VERSION);
   res.append("Access-Control-Allow-Origin", "*");
   res.append("Access-Control-Allow-Headers", "*");
+  res.append("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
   next();
 });
 
