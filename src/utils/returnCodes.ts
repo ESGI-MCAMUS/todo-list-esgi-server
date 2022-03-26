@@ -77,6 +77,20 @@ export const returnCode = {
       message: "The todo has been created successfully!",
     },
   },
+  todo_removed: {
+    code: 201,
+    payload: {
+      title: "todo_removed",
+      message: "The todo has been removed successfully!",
+    },
+  },
+  todo_not_found: {
+    code: 404,
+    payload: {
+      title: "todo_not_found",
+      message: "Can find the todo!",
+    },
+  },
 };
 
 export interface Res {

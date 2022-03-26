@@ -65,3 +65,7 @@ export interface ItemAdd {
   nom: string;
   content: string;
 }
+
+export interface ItemRemove {
+  id: number;
+}
