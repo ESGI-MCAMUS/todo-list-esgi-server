@@ -92,7 +92,7 @@ npm run slient-test # Run the tests without logs and warning
 - Get all todos from a user:
 
   ```bash
-  🔐 GET: /list/:id # (id is the user id)
+  🔐 GET /list/:id # (id is the user id)
   ```
 - Create a todo:
 
