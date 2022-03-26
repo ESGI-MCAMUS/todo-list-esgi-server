@@ -42,8 +42,6 @@ export class User {
    * @returns {boolean}
    */
   isValid = (): boolean => {
-    console.log("birthdate valid", isOldEnough(this.birthdate));
-
     return (
       this.firstname.length > 0 &&
       this.lastname.length !== 0 &&
@@ -61,7 +59,8 @@ export class User {
       "SELECT * FROM users WHERE email = ?",
       [this.email]
     );
-    const hashedPassword = users[0].password;
+
+    const hashedPassword = users.length === 0 ? "" : users[0].password;
     const isPasswordValid = await bcrypt.compare(this.password, hashedPassword);
     return users.length === 0 ? false : isPasswordValid ? users[0] : false;
   };

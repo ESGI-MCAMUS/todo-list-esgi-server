@@ -26,7 +26,6 @@ export class ToDoList {
       "SELECT item.id, item.name, item.content, item.created_at from todoList tdl left join item on tdl.fk_item = item.id where fk_user = ?",
       [this.userId]
     );
-    console.log(todos);
     this.todos = todos;
     return this.todos;
   };
